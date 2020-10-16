@@ -1,0 +1,14 @@
+.header {
+  &-info {
+    .logo {
+      margin: 0 auto;
+      font-family: "Montserrat";
+      color: rgb(74, 144, 202);
+
+      span {
+        color: rgb(51, 103, 145);
+      }
+    }
+    display: flex;
+  }
+}

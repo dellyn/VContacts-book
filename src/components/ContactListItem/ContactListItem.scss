@@ -1,0 +1,38 @@
+.contact-list-item {
+  position: relative;
+  .contact-person {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(163, 163, 163);
+    padding: 5px 10px;
+    &:first-child {
+      border-top: 1px solid rgb(163, 163, 163);
+    }
+    &:hover {
+      background-color: rgb(221, 221, 221);
+    }
+    &:hover + .delete-btn {
+      display: block;
+    }
+    &-img {
+      margin-right: 30px;
+    }
+    &-name {
+      margin-right: 20px;
+    }
+  }
+  .delete-btn {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    padding: 0;
+    background-color: rgb(196, 196, 196);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
