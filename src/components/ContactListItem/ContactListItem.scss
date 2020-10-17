@@ -1,5 +1,11 @@
 .contact-list-item {
   position: relative;
+  &:hover {
+    background-color: rgb(221, 221, 221);
+  }
+  &:hover .delete-btn {
+    display: block;
+  }
   .contact-person {
     display: flex;
     align-items: center;
@@ -8,14 +14,10 @@
     &:first-child {
       border-top: 1px solid rgb(163, 163, 163);
     }
-    &:hover {
-      background-color: rgb(221, 221, 221);
-    }
-    &:hover + .delete-btn {
-      display: block;
-    }
+
     &-img {
       margin-right: 30px;
+      width: 30px;
     }
     &-name {
       margin-right: 20px;

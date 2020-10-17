@@ -3,34 +3,31 @@ import "./App.scss";
 import Header from "../Header";
 import ContactList from "../ContactList";
 import ContactAddForm from "../ContactAddForm";
-import Modal from "../Modal";
 
 export default class App extends Component {
-  // const { modalActive, setModalActive } = ;
-
+  maxId = 100;
   state = {
-    modalActive: false,
     contactData: [
       {
-        firstName: "Kek",
-        lastName: "Olegovich",
-        id: 1,
-        phone: "380978766813",
-        email: "test@gmail.com",
-      },
-      {
         firstName: "Vova",
-        lastName: "Front",
-        id: 2,
+        lastName: "Olegovich",
         phone: "380978766813",
         email: "test@gmail.com",
+        id: 1,
       },
       {
-        firstName: "Katia",
-        lastName: "Back",
-        id: 3,
+        firstName: "Name",
+        lastName: "Front",
         phone: "380978766813",
         email: "test@gmail.com",
+        id: 2,
+      },
+      {
+        firstName: "Nazar",
+        lastName: "Back",
+        phone: "380978766813",
+        email: "test@gmail.com",
+        id: 3,
       },
     ],
   };
@@ -49,32 +46,29 @@ export default class App extends Component {
       };
     });
   };
-
-  // setModalActive = (modalInactive) => {
-  //   this.setState(({ modalActive }) => {
-  //     console.log("close", modalActive);
-  //     return {
-  //       modalActive: modalInactive,
-  //     };
-  //   });
-  // };
-  setModalActive = (statusActive) => {
-    this.setState(({ modalActive }) => {
+  addContact = (values) => {
+    this.maxId = this.maxId++;
+    const newContact = {
+      id: this.maxId++,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      email: values.email,
+    };
+    this.setState(({ contactData }) => {
+      const newContactData = [...contactData, newContact];
       return {
-        modalActive: statusActive,
+        contactData: newContactData,
       };
     });
+    console.log(this.state.contactData);
   };
-  render() {
 
+  render() {
     return (
       <div className="App">
-        <Modal
-          active={this.state.modalActive}
-          setActive={this.setModalActive}
-        ></Modal>
         <Header />
-        <ContactAddForm setActive={this.setModalActive} />
+        <ContactAddForm addContact={this.addContact} />
         <ContactList
           contacts={this.state.contactData}
           onDeleted={this.deleteContact}

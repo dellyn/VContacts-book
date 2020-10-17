@@ -10,7 +10,9 @@ const Modal = ({ active, setActive, children }) => {
         className={active ? "modal-content active" : "modal-content"}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="close-btn">x</button>
+        <button className="close-btn" onClick={() => setActive(false)}>
+          x
+        </button>
         <div className="modal-root">{children}</div>
       </div>
     </div>
