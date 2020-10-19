@@ -20,6 +20,7 @@ export default class ContactAddForm extends Component {
   onContactAdded = () => {
     const { modalActive, ...contactValues } = this.state;
     this.props.addContact({ ...contactValues });
+    this.setModalActive(false);
   };
   setModalActive = (statusActive) => {
     this.setState(({ modalActive }) => {
