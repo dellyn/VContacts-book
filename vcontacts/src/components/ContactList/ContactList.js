@@ -3,28 +3,14 @@ import ContactListItem from "../ContactListItem";
 
 import "./ContactList.scss";
 
-const ContactList = ({
-  contacts,
-  storage,
-  onDeleted,
-  addContactValue,
-  deleteСontactValue,
-  editContactValue,
-  cancelLastChange,
-}) => {
+const ContactList = ({ contacts, onDeleted }) => {
   const contactListItem = contacts.map((item) => {
-    const { ...itemProps } = item;
-    const { id } = item;
+    const { id, ...itemProps } = item;
     return (
       <ContactListItem
         key={id}
         {...itemProps}
-        storage={storage}
         onDeleted={() => onDeleted(id)}
-        addContactValue={addContactValue}
-        deleteСontactValue={deleteСontactValue}
-        editContactValue={editContactValue}
-        cancelLastChange={cancelLastChange}
       />
     );
   });

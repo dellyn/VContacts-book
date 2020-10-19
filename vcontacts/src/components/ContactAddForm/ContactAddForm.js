@@ -8,7 +8,7 @@ export default class ContactAddForm extends Component {
     firstName: null,
     lastName: null,
     phone: null,
-    email: null,
+    email: null ,
   };
 
   onChangeHandler = (e) => {
@@ -31,7 +31,7 @@ export default class ContactAddForm extends Component {
 
   render() {
     const children = (
-      <div className="contact-add-child">
+      <div>
         <p>
           <label htmlFor="firstName">First Name: </label>
           <input
@@ -69,7 +69,7 @@ export default class ContactAddForm extends Component {
           />
         </p>
         <button className="add-contact-btn" onClick={this.onContactAdded}>
-          Add Contact
+          add
         </button>
         <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
@@ -83,11 +83,8 @@ export default class ContactAddForm extends Component {
           className="add-contact"
           onClick={() => this.setModalActive(true)}
         >
-          +
+          Add Contact
         </button>
-        <h1 className="logo">
-          <span>VC</span>ontacts
-        </h1>
       </div>
     );
   }

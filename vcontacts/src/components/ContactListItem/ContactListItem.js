@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./ContactListItem.scss";
+import Modal from "../Modal";
 import ContactDetails from "../ContactDetails";
 export default class ContactListItem extends Component {
   state = {
@@ -15,15 +16,9 @@ export default class ContactListItem extends Component {
   };
 
   render() {
-    const {
-      onDeleted,
-      addContactValue,
-      deleteСontactValue,
-      cancelLastChange,
-      editContactValue,
-      storage,
-      ...contactDetails
-    } = this.props;
+    const { firstName, lastName } = this.props;
+    const { ...contactDetails } = this.props;
+
     return (
       <div>
         <div
@@ -37,32 +32,16 @@ export default class ContactListItem extends Component {
               className="contact-person-img"
             />
             <p className="contact-person-name">
-              {contactDetails.firstName} {contactDetails.lastName}
+              {firstName} {lastName}
             </p>
           </div>
           <button className="delete-btn" onClick={this.props.onDeleted}>
             x
           </button>
         </div>
-        <div
-          className={
-            this.state.modalActive
-              ? "active contact-details-layer"
-              : "contact-details-layer "
-          }
-        >
-          <div className="contact-details-content ">
-            <ContactDetails
-              getContactData={contactDetails}
-              storage={storage}
-              deleteСontactValue={this.props.deleteСontactValue}
-              editContactValue={editContactValue}
-              addContactValue={addContactValue}
-              cancelLastChange={cancelLastChange}
-              setActive={this.setModalActive}
-            />
-          </div>
-        </div>
+        <Modal active={this.state.modalActive} setActive={this.setModalActive}>
+          <ContactDetails getContactData={contactDetails} />
+        </Modal>
       </div>
     );
   }

@@ -1,0 +1,23 @@
+.contact-add {
+  &-form {
+    padding: 0px 50px 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+  }
+  &-child {
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+  }
+ 
+}
+ .logo {
+    color: rgb(74, 202, 196);
+
+    span {
+      color: rgb(0, 136, 177);
+    }
+  }
