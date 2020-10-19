@@ -10,13 +10,13 @@ export default class ContactAddForm extends Component {
     phone: null,
     email: null,
   };
-
+  // value from input
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
-
+  // convert data entered by user into contact
   onContactAdded = () => {
     const { modalActive, ...contactValues } = this.state;
     this.props.addContact({ ...contactValues });

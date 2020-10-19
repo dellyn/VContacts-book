@@ -3,10 +3,11 @@ import Modal from "../Modal";
 import "./ContactDetails.scss";
 
 export default class ContactDetails extends Component {
-  userValueId = 100;
   state = {
     addItem: false,
   };
+
+  // toggle field for add new useк fielld
   onAddItem = () => {
     this.setState((state) => {
       return {
@@ -14,13 +15,17 @@ export default class ContactDetails extends Component {
       };
     });
   };
+  addContactField = (userKeyField, userValueField, id) => {
+    this.props.addContactValue(userKeyField, userValueField, id);
+  };
+
+  // Get value from inputs and write in state
   onChangeHandler = (e) => {
-    this.userKeyField = e.target.value;
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
-
+  // controls state modal window
   setModalActive = (statusActive) => {
     this.setState(({ modalActive }) => {
       return {
@@ -29,9 +34,6 @@ export default class ContactDetails extends Component {
     });
   };
 
-  addContactField = (userKeyField, userValueField, id) => {
-    this.props.addContactValue(userKeyField, userValueField, id);
-  };
   deleteField = (key, id) => {
     this.setState(() => {
       return {
@@ -49,38 +51,36 @@ export default class ContactDetails extends Component {
     );
     this.setModalActive(false);
   };
+
+  editField = (key, userKey, userValue, id) => {
+    this.props.editContactValue(key, userKey, userValue, id);
+
+    this.setState(() => {
+      return {
+        hideDelMod: true,
+      };
+    });
+  };
+
+  confirmCancel = () => {
+    this.props.cancelLastChange();
+    this.setModalActive(false);
+  };
+  onCancelChange = () => {
+    this.setState(() => {
+      return {
+        hideDelMod: true,
+      };
+    });
+    this.setModalActive(true);
+  };
+
+  // this function for process user data in custom field
   enterHandler = (e) => {
     this.setState({
       clearFields: false,
       [e.target.name]: e.target.value,
     });
-  };
-  editField = (key, userKey, userValue, id) => {
-    this.setState(() => {
-      return {
-        modalEditKey: key,
-        modalEditUserKey: userKey,
-        modalEditUserValue: userValue,
-        modalEditId: id,
-
-        hideDelMod: true,
-        modalActive: true,
-      };
-    });
-  };
-  confirmEditField = () => {
-    this.props.editContactValue(
-      this.state.modalEditKey,
-      this.state.modalEditUserKey,
-      this.state.modalEditUserValue,
-      this.state.modalEditId
-    );
-    this.setState(() => {
-      return {
-        clearFields: true,
-      };
-    });
-    this.setModalActive(false);
   };
 
   render() {
@@ -89,7 +89,6 @@ export default class ContactDetails extends Component {
     const contactListItem = Object.keys(getContactData)
       .filter((item) => item !== "id")
       .map((key) => {
-        // if (key !== "id") {
         return (
           <div key={getContactData[key]}>
             <input
@@ -108,7 +107,7 @@ export default class ContactDetails extends Component {
             <button
               className="edit-item"
               onClick={() =>
-                this.editField(
+                this.props.editContactValue(
                   key,
                   this.state[key],
                   this.state[getContactData[key]],
@@ -118,16 +117,7 @@ export default class ContactDetails extends Component {
             >
               Edit
             </button>
-            <Modal
-              active={this.state.modalActive}
-              setActive={this.setModalActive}
-            >
-              <div className="">
-                <p className="confirm-text">Edit Confirmation</p>
-                <button onClick={() => this.confirmEditField()}>Edit</button>
-                <button onClick={() => this.setModalActive(false)}>No</button>
-              </div>
-            </Modal>
+
             <button
               className="add-contact"
               onClick={() => this.deleteField(key, id)}
@@ -141,16 +131,13 @@ export default class ContactDetails extends Component {
               >
                 <div className="">
                   <p className="confirm-text">Delete confirmation</p>
-                  <button onClick={() => this.confirmDeleteFild()}>
-                    Delete
-                  </button>
+                  <button onClick={() => this.confirmDeleteFild()}>Yes</button>
                   <button onClick={() => this.setModalActive(false)}>No</button>
                 </div>
               </Modal>
             </div>
           </div>
         );
-        // }
       });
     const { userKeyField, userValueField } = this.state;
     return (
@@ -165,10 +152,17 @@ export default class ContactDetails extends Component {
         </button>
         <button
           className={storage !== null ? "step-back" : "dn"}
-          onClick={() => this.props.cancelLastChange()}
+          onClick={this.onCancelChange}
         >
           Cancel last change
         </button>
+        <Modal active={this.state.modalActive} setActive={this.setModalActive}>
+          <div className="">
+            <p className="confirm-text">Cancel changes?</p>
+            <button onClick={() => this.confirmCancel()}>Yes</button>
+            <button onClick={() => this.setModalActive(false)}>No</button>
+          </div>
+        </Modal>
         <ul>{contactListItem}</ul>
         <div
           className={this.state.addItem ? "custom-field" : "custom-field dn"}

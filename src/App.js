@@ -30,12 +30,14 @@ export default class App extends Component {
       },
     ],
     cancelBtn: false,
+    // storage keeps the last user change
     storage: null,
   };
+
+  // Delete contacts field
   deleteСontactValue = (contactValue, contactId) => {
     this.setState(({ contactData }) => {
       const index = contactData.findIndex((el) => el.id === contactId);
-      // let operationArr = contactData[index];
       let operationElem = Object.assign({}, contactData[index]);
       delete operationElem[contactValue];
       const newContactData = [
@@ -49,6 +51,7 @@ export default class App extends Component {
       };
     });
   };
+  // Delete all info about contact
   deleteContact = (contactId) => {
     this.setState(({ contactData }) => {
       const index = contactData.findIndex((el) => el.id === contactId);
@@ -62,7 +65,7 @@ export default class App extends Component {
       };
     });
   };
-
+  // Adding new contact
   addContact = (values) => {
     this.maxId = this.maxId++;
     const newContact = {
@@ -79,23 +82,27 @@ export default class App extends Component {
       };
     });
   };
+  // Adding new fields for contact
   addContactValue = (userKeyField, userValueField, contactId) => {
-    this.setState(({ contactData }) => {
-      const index = contactData.findIndex((el) => el.id === contactId);
-      let operationElem = Object.assign({}, contactData[index]);
-      operationElem[userKeyField] = userValueField;
-      const newContactData = [
-        ...contactData.slice(0, index),
-        operationElem,
-        ...contactData.slice(index + 1),
-      ];
+    if (userKeyField && userValueField !== undefined) {
+      this.setState(({ contactData }) => {
+        const index = contactData.findIndex((el) => el.id === contactId);
+        let operationElem = Object.assign({}, contactData[index]);
+        operationElem[userKeyField] = userValueField;
+        const newContactData = [
+          ...contactData.slice(0, index),
+          operationElem,
+          ...contactData.slice(index + 1),
+        ];
 
-      return {
-        contactData: newContactData,
-        storage: contactData[index],
-      };
-    });
+        return {
+          contactData: newContactData,
+          storage: contactData[index],
+        };
+      });
+    }
   };
+  // User editing of fields
   editContactValue = (
     editedField,
     contactKeyField,
@@ -137,6 +144,8 @@ export default class App extends Component {
       });
     }
   };
+
+  // backup the last changes and restore him
   cancelLastChange = () => {
     if (this.state.storage !== null) {
       this.setState(({ storage, contactData }) => {
