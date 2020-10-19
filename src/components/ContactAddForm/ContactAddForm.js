@@ -71,7 +71,6 @@ export default class ContactAddForm extends Component {
         <button className="add-contact-btn" onClick={this.onContactAdded}>
           Add Contact
         </button>
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     );
     return (

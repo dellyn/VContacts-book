@@ -9,12 +9,9 @@
   .contact-person {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgb(88, 95, 104);
+    border-top: 1px solid rgb(88, 95, 104);
     padding: 5px 20px;
     font-weight: 500;
-    &:first-child {
-      border-top: 1px solid rgb(163, 163, 163);
-    }
 
     &-img {
       margin-right: 30px;

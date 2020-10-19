@@ -32,7 +32,8 @@ button {
   cursor: pointer;
 }
 .app-block {
-  width: 800px;
+  width: 90%;
+  max-width: 800px;
   margin: 0 auto;
   position: relative;
   margin-top: 120px;
